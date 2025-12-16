@@ -1,0 +1,564 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Furnishings | Modern Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,500;0,600;1,500&amp;display=swap" rel="stylesheet">
+
+    <style>
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Base Styles */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-heading {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Custom Checkbox */
+        .custom-checkbox:checked + div {
+            background-color: #171717;
+            border-color: #171717;
+        }
+        .custom-checkbox:checked + div svg {
+            display: block;
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-white text-zinc-600 antialiased selection:bg-zinc-900 selection:text-white">
+
+    <!-- Modern Minimal Navbar -->
+    <nav class="fixed top-0 z-50 w-full glass border-b border-zinc-200/50">
+        <div class="container mx-auto px-4 lg:px-6 h-16 flex items-center justify-between gap-8">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group shrink-0">
+                <div class="w-8 h-8 bg-zinc-900 text-white flex items-center justify-center rounded-md">
+                    <span class="font-heading italic font-medium text-lg">R</span>
+                </div>
+                <span class="font-sans text-sm font-semibold tracking-tight text-zinc-900">ROYAL<span class="text-zinc-400 font-normal">FURNISH</span></span>
+            </a>
+
+            <!-- Center Links (Desktop) -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500">
+                <a href="#" class="hover:text-zinc-900 transition-colors" onclick="filterCategory('All')">Shop All</a>
+                <a href="#" class="hover:text-zinc-900 transition-colors" onclick="filterCategory('Living Room')">Living</a>
+                <a href="#" class="hover:text-zinc-900 transition-colors" onclick="filterCategory('Dining')">Dining</a>
+                <a href="#" class="hover:text-zinc-900 transition-colors" onclick="filterCategory('Bedroom')">Bedroom</a>
+                <a href="#" class="hover:text-zinc-900 transition-colors" onclick="filterCategory('Office')">Workspace</a>
+            </div>
+
+            <!-- Search & Actions -->
+            <div class="flex items-center gap-3">
+                <!-- Search Bar -->
+                <div class="hidden lg:flex items-center bg-zinc-100/80 hover:bg-zinc-100 transition-colors rounded-full px-3 py-1.5 w-64 ring-1 ring-transparent focus-within:ring-zinc-200 focus-within:bg-white">
+                    <span class="iconify text-zinc-400 text-lg" data-icon="lucide:search"></span>
+                    <input type="text" id="searchInput" placeholder="Search furniture..." class="bg-transparent border-none outline-none text-sm ml-2 w-full text-zinc-900 placeholder:text-zinc-400">
+                </div>
+
+                <div class="flex items-center gap-1 border-l border-zinc-200 pl-3 ml-2">
+                    <button class="p-2 hover:bg-zinc-100 rounded-full transition-colors relative group">
+                        <span class="iconify text-xl text-zinc-600 group-hover:text-zinc-900" data-icon="lucide:user"></span>
+                    </button>
+                    
+                    <button onclick="toggleCart()" class="p-2 hover:bg-zinc-100 rounded-full transition-colors relative group">
+                        <span class="iconify text-xl text-zinc-600 group-hover:text-zinc-900" data-icon="lucide:shopping-bag"></span>
+                        <span id="cartCount" class="absolute top-1.5 right-1.5 bg-zinc-900 text-white text-[10px] font-medium h-4 w-4 rounded-full flex items-center justify-center ring-2 ring-white transform scale-0 transition-transform duration-200">0</span>
+                    </button>
+                    
+                    <button class="md:hidden p-2 hover:bg-zinc-100 rounded-full transition-colors">
+                        <span class="iconify text-xl text-zinc-600" data-icon="lucide:menu"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-16 lg:pt-40 lg:pb-24 px-4 sm:px-6">
+        <div class="container mx-auto text-center max-w-4xl animate-fade-in">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-50 border border-zinc-200 mb-6">
+                <span class="flex h-2 w-2 rounded-full bg-amber-500"></span>
+                <span class="text-xs font-medium text-zinc-600 tracking-wide uppercase">New Spring Collection</span>
+            </div>
+            <h1 class="font-heading text-5xl md:text-7xl font-medium text-zinc-900 tracking-tight leading-[1.1] mb-6">
+                Curated comfort for <br class="hidden md:block">
+                <span class="italic text-zinc-500">modern</span> living.
+            </h1>
+            <p class="text-zinc-500 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                Discover pieces that blend timeless craftsmanship with contemporary design. Elevate your space with our exclusive selection.
+            </p>
+            <div class="flex items-center justify-center gap-4">
+                <button onclick="scrollToProducts()" class="bg-zinc-900 hover:bg-zinc-800 text-white h-12 px-8 rounded-full text-sm font-medium transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+                    Explore Collection <span class="iconify" data-icon="lucide:arrow-right"></span>
+                </button>
+                <button class="bg-white hover:bg-zinc-50 text-zinc-900 border border-zinc-200 h-12 px-8 rounded-full text-sm font-medium transition-colors">
+                    View Lookbook
+                </button>
+            </div>
+        </div>
+
+        <!-- Hero Image Grid -->
+        <div class="container mx-auto mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 px-4 lg:px-0">
+            <div class="h-48 md:h-80 rounded-2xl overflow-hidden relative group">
+                <img src="https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&amp;w=800&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+            </div>
+            <div class="h-48 md:h-80 rounded-2xl overflow-hidden relative group md:mt-12">
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&amp;w=800&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+            </div>
+            <div class="h-48 md:h-80 rounded-2xl overflow-hidden relative group">
+                <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?q=80&amp;w=800&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+            </div>
+            <div class="h-48 md:h-80 rounded-2xl overflow-hidden relative group md:mt-12">
+                <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&amp;w=800&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 lg:px-6 py-16 flex flex-col lg:flex-row gap-12">
+        
+        <!-- Sidebar Filters -->
+        <aside class="hidden lg:block w-56 shrink-0 space-y-10 sticky top-24 h-fit">
+            <div>
+                <h3 class="text-xs font-semibold text-zinc-900 uppercase tracking-wider mb-4">Categories</h3>
+                <div class="space-y-3">
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <input type="checkbox" class="hidden custom-checkbox">
+                        <div class="w-4 h-4 rounded border border-zinc-300 flex items-center justify-center transition-colors group-hover:border-zinc-400">
+                            <svg class="hidden w-2.5 h-2.5 text-white pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <span class="text-sm text-zinc-600 group-hover:text-zinc-900 transition-colors">Sofas &amp; Seating</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <input type="checkbox" class="hidden custom-checkbox">
+                        <div class="w-4 h-4 rounded border border-zinc-300 flex items-center justify-center transition-colors group-hover:border-zinc-400">
+                            <svg class="hidden w-2.5 h-2.5 text-white pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <span class="text-sm text-zinc-600 group-hover:text-zinc-900 transition-colors">Tables</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <input type="checkbox" class="hidden custom-checkbox">
+                        <div class="w-4 h-4 rounded border border-zinc-300 flex items-center justify-center transition-colors group-hover:border-zinc-400">
+                            <svg class="hidden w-2.5 h-2.5 text-white pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <span class="text-sm text-zinc-600 group-hover:text-zinc-900 transition-colors">Storage</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer group">
+                        <input type="checkbox" class="hidden custom-checkbox">
+                        <div class="w-4 h-4 rounded border border-zinc-300 flex items-center justify-center transition-colors group-hover:border-zinc-400">
+                            <svg class="hidden w-2.5 h-2.5 text-white pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <span class="text-sm text-zinc-600 group-hover:text-zinc-900 transition-colors">Lighting</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xs font-semibold text-zinc-900 uppercase tracking-wider mb-4">Price Range</h3>
+                <div class="relative mb-2">
+                    <input type="range" min="0" max="5000" class="w-full h-1 bg-zinc-200 rounded-lg appearance-none cursor-pointer accent-zinc-900">
+                </div>
+                <div class="flex justify-between text-xs text-zinc-500 font-medium">
+                    <span>$0</span>
+                    <span>$5,000+</span>
+                </div>
+            </div>
+            
+            <div class="pt-6 border-t border-zinc-100">
+                <div class="bg-zinc-50 p-4 rounded-xl border border-zinc-100">
+                    <span class="text-xs font-semibold text-amber-600 uppercase">Premium Member</span>
+                    <p class="text-xs text-zinc-500 mt-1 mb-3">Join for free shipping and 5% off every order.</p>
+                    <button class="w-full bg-white border border-zinc-200 text-zinc-900 text-xs font-medium py-2 rounded-lg hover:border-zinc-400 transition-colors">Join Now</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Product Area -->
+        <div class="flex-1 min-w-0">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                <h2 class="font-heading text-2xl font-medium text-zinc-900" id="products-heading">Featured Items</h2>
+                <div class="flex items-center gap-3">
+                    <div class="relative group">
+                        <select class="appearance-none bg-white border border-zinc-200 text-zinc-700 text-xs font-medium py-2 pl-3 pr-8 rounded-lg outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all cursor-pointer">
+                            <option>Recommended</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                        </select>
+                        <span class="iconify absolute right-2.5 top-2.5 text-zinc-400 text-xs pointer-events-none" data-icon="lucide:chevron-down"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Load More -->
+            <div class="mt-16 flex justify-center">
+                <button class="text-sm font-medium text-zinc-900 border-b border-zinc-200 hover:border-zinc-900 pb-1 transition-all">
+                    Load More Products
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Simple Footer -->
+    <footer class="border-t border-zinc-100 bg-white pt-16 pb-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div class="col-span-2 md:col-span-1">
+                    <a href="#" class="flex items-center gap-2 mb-4">
+                        <div class="w-6 h-6 bg-zinc-900 text-white flex items-center justify-center rounded text-xs font-heading">R</div>
+                        <span class="font-sans text-sm font-semibold tracking-tight">ROYAL</span>
+                    </a>
+                    <p class="text-sm text-zinc-500 max-w-xs">
+                        Designing the future of living spaces with heritage quality and modern aesthetics.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-medium text-zinc-900 text-sm mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-zinc-500">
+                        <li><a href="#" class="hover:text-zinc-900 transition">About</a></li>
+                        <li><a href="#" class="hover:text-zinc-900 transition">Careers</a></li>
+                        <li><a href="#" class="hover:text-zinc-900 transition">Showrooms</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium text-zinc-900 text-sm mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm text-zinc-500">
+                        <li><a href="#" class="hover:text-zinc-900 transition">Contact</a></li>
+                        <li><a href="#" class="hover:text-zinc-900 transition">Shipping</a></li>
+                        <li><a href="#" class="hover:text-zinc-900 transition">Returns</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-medium text-zinc-900 text-sm mb-4">Social</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-zinc-400 hover:text-zinc-900 transition"><span class="iconify text-lg" data-icon="lucide:instagram"></span></a>
+                        <a href="#" class="text-zinc-400 hover:text-zinc-900 transition"><span class="iconify text-lg" data-icon="lucide:twitter"></span></a>
+                        <a href="#" class="text-zinc-400 hover:text-zinc-900 transition"><span class="iconify text-lg" data-icon="lucide:facebook"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-zinc-100 text-xs text-zinc-400">
+                <p>© 2024 Royal Furnishings. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-zinc-600">Privacy Policy</a>
+                    <a href="#" class="hover:text-zinc-600">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Overlay & Sidebar -->
+    <div id="cartOverlay" class="fixed inset-0 bg-zinc-900/20 backdrop-blur-sm z-50 hidden transition-opacity duration-300 opacity-0" onclick="toggleCart()"></div>
+    
+    <div id="cartSidebar" class="fixed top-2 right-2 bottom-2 w-full md:w-[400px] bg-white rounded-xl shadow-2xl z-50 transform translate-x-[105%] transition-transform duration-300 flex flex-col border border-zinc-100 overflow-hidden">
+        <div class="p-5 border-b border-zinc-100 flex justify-between items-center bg-white">
+            <h2 class="font-medium text-zinc-900">Your Cart</h2>
+            <button onclick="toggleCart()" class="text-zinc-400 hover:text-zinc-900 transition p-1 rounded-md hover:bg-zinc-100"><span class="iconify text-lg" data-icon="lucide:x"></span></button>
+        </div>
+        
+        <div id="cartItems" class="flex-1 overflow-y-auto p-5 space-y-5">
+            <!-- Items -->
+        </div>
+
+        <div class="p-5 border-t border-zinc-100 bg-zinc-50/50">
+            <div class="flex justify-between mb-4 text-sm font-medium text-zinc-900">
+                <span>Subtotal</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <p class="text-xs text-zinc-500 mb-4">Taxes and shipping calculated at checkout.</p>
+            <button onclick="alert('Proceeding to checkout...')" class="w-full bg-zinc-900 hover:bg-zinc-800 text-white py-3 rounded-lg text-sm font-medium transition shadow-lg shadow-zinc-900/5">
+                Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-center justify-center min-h-screen p-4 text-center sm:p-0">
+            <div class="fixed inset-0 bg-white/80 backdrop-blur-md transition-opacity" aria-hidden="true" onclick="closeModal()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
+            <div class="inline-block align-middle bg-white text-left overflow-hidden shadow-2xl transform transition-all sm:max-w-4xl sm:w-full rounded-2xl border border-zinc-100 ring-1 ring-black/5 relative">
+                <button type="button" onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-white/50 hover:bg-white rounded-full p-2 text-zinc-500 hover:text-zinc-900 transition-all backdrop-blur-sm">
+                    <span class="iconify text-xl" data-icon="lucide:x"></span>
+                </button>
+                <div id="modalContent" class="bg-white"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal Toast -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-900 text-white px-4 py-2 rounded-full shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3 text-sm font-medium">
+        <span class="iconify text-emerald-400" data-icon="lucide:check-circle"></span>
+        <span id="toastMsg">Added to cart</span>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Furniture Data with Updated Image IDs
+        const products = [
+            { id: 1, name: "Imperial Chesterfield", category: "Living Room", price: 1299, oldPrice: 1599, rating: 5, image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=800&auto=format&fit=crop", description: "Deep buttoning, scrolled arms, and antique leather finish." },
+            { id: 2, name: "Regal Oak Table", category: "Dining", price: 899, oldPrice: 1100, rating: 4.5, image: "https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?q=80&w=800&auto=format&fit=crop", description: "Solid oak with minimal gold accents. Seats 8." },
+            { id: 3, name: "Velvet Lounge Chair", category: "Living Room", price: 450, oldPrice: null, rating: 4.8, image: "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?q=80&w=800&auto=format&fit=crop", description: "Premium midnight blue velvet with brushed gold legs." },
+            { id: 4, name: "Executive Desk", category: "Office", price: 2100, oldPrice: 2500, rating: 5, image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=800&auto=format&fit=crop", description: "Solid mahogany construction with leather surface." },
+            { id: 5, name: "Victorian Frame", category: "Bedroom", price: 1850, oldPrice: 2200, rating: 4.9, image: "https://images.unsplash.com/photo-1505693416388-b0346efee539?q=80&w=800&auto=format&fit=crop", description: "Intricate wood carvings and a tall headboard." },
+            { id: 6, name: "Art Deco Lamp", category: "Decor", price: 299, oldPrice: 350, rating: 4.6, image: "https://images.unsplash.com/photo-1507473888900-52ea50811282?q=80&w=800&auto=format&fit=crop", description: "Geometric brass lamp inspired by the 20s." },
+            { id: 7, name: "Carrara Coffee Table", category: "Living Room", price: 599, oldPrice: null, rating: 4.7, image: "https://images.unsplash.com/photo-1532372320572-cda25653a26d?q=80&w=800&auto=format&fit=crop", description: "Italian marble top supported by an iron frame." },
+            { id: 8, name: "Walnut Bookshelf", category: "Office", price: 750, oldPrice: 900, rating: 4.4, image: "https://images.unsplash.com/photo-1594620302200-9a762244a156?q=80&w=800&auto=format&fit=crop", description: "Open shelving with a rustic walnut finish." }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('royalCart')) || [];
+        const grid = document.getElementById('productGrid');
+        const cartCountEl = document.getElementById('cartCount');
+        const cartItemsEl = document.getElementById('cartItems');
+        const cartTotalEl = document.getElementById('cartTotal');
+
+        function renderProducts(filter = 'All') {
+            grid.innerHTML = '';
+            const filtered = filter === 'All' ? products : products.filter(p => p.category === filter);
+
+            if(filtered.length === 0) {
+                 grid.innerHTML = '<div class="col-span-full text-center py-10 text-zinc-400 font-light">No products found in this category.</div>';
+                 return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "group cursor-pointer flex flex-col";
+                card.innerHTML = `
+                    <div class="relative aspect-[4/5] bg-zinc-100 rounded-xl overflow-hidden mb-4" onclick="openModal(${p.id})">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+                        <button onclick="event.stopPropagation(); addToCart(${p.id})" class="absolute bottom-4 right-4 bg-white text-zinc-900 w-10 h-10 rounded-full flex items-center justify-center shadow-lg translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-zinc-900 hover:text-white">
+                            <span class="iconify" data-icon="lucide:plus"></span>
+                        </button>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-base font-medium text-zinc-900 group-hover:text-zinc-600 transition-colors" onclick="openModal(${p.id})">${p.name}</h3>
+                            <p class="text-xs text-zinc-500 mt-1">${p.category}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="block text-sm font-medium text-zinc-900">$${p.price}</span>
+                            ${p.oldPrice ? `<span class="block text-xs text-zinc-400 line-through">$${p.oldPrice}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updateCartUI() {
+            localStorage.setItem('royalCart', JSON.stringify(cart));
+            const count = cart.reduce((acc, item) => acc + item.qty, 0);
+            cartCountEl.textContent = count;
+            cartCountEl.classList.toggle('scale-0', count === 0);
+            
+            if(cart.length === 0) {
+                cartItemsEl.innerHTML = `<div class="flex flex-col items-center justify-center h-48 text-zinc-400 gap-2">
+                    <span class="iconify text-3xl opacity-20" data-icon="lucide:shopping-bag"></span>
+                    <span class="text-sm font-light">Your cart is empty</span>
+                </div>`;
+                cartTotalEl.textContent = '$0.00';
+                return;
+            }
+
+            cartItemsEl.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const product = products.find(p => p.id === item.id);
+                total += product.price * item.qty;
+                const el = document.createElement('div');
+                el.className = "flex gap-4 animate-fade-in";
+                el.innerHTML = `
+                    <div class="w-16 h-16 bg-zinc-100 rounded-lg overflow-hidden shrink-0">
+                        <img src="${product.image}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-sm font-medium text-zinc-900 truncate pr-2">${product.name}</h4>
+                            <span class="text-xs font-medium text-zinc-900">$${product.price}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-zinc-500">${product.category}</span>
+                            <div class="flex items-center gap-3">
+                                <button onclick="updateQty(${item.id}, -1)" class="text-zinc-400 hover:text-zinc-600"><span class="iconify" data-icon="lucide:minus-circle"></span></button>
+                                <span class="text-xs font-medium w-3 text-center">${item.qty}</span>
+                                <button onclick="updateQty(${item.id}, 1)" class="text-zinc-400 hover:text-zinc-600"><span class="iconify" data-icon="lucide:plus-circle"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cartItemsEl.appendChild(el);
+            });
+            cartTotalEl.textContent = '$' + total.toFixed(2);
+        }
+
+        function addToCart(id) {
+            const existing = cart.find(item => item.id === id);
+            if(existing) existing.qty++;
+            else cart.push({ id, qty: 1 });
+            updateCartUI();
+            showToast("Added to bag");
+        }
+
+        function updateQty(id, change) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += change;
+                if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+                updateCartUI();
+            }
+        }
+
+        function toggleCart(forceOpen = null) {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+            const isOpen = !sidebar.classList.contains('translate-x-[105%]');
+            
+            if (forceOpen === true || (!isOpen && forceOpen === null)) {
+                sidebar.classList.remove('translate-x-[105%]');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                sidebar.classList.add('translate-x-[105%]');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        function openModal(id) {
+            const p = products.find(prod => prod.id === id);
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <div class="flex flex-col md:flex-row h-full">
+                    <div class="w-full md:w-1/2 h-64 md:h-auto bg-zinc-100 relative">
+                        <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover">
+                    </div>
+                    <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col">
+                        <div class="text-xs font-medium text-zinc-500 uppercase tracking-wide mb-2">${p.category}</div>
+                        <h2 class="font-heading text-3xl font-medium text-zinc-900 mb-2">${p.name}</h2>
+                        <div class="flex items-baseline gap-3 mb-6">
+                            <span class="text-2xl font-medium text-zinc-900">$${p.price}</span>
+                             ${p.oldPrice ? `<span class="text-lg text-zinc-400 line-through">$${p.oldPrice}</span>` : ''}
+                        </div>
+                        <p class="text-zinc-600 leading-relaxed text-sm mb-8">${p.description} Experience luxury redefined with materials sourced from the finest artisans globally.</p>
+                        
+                        <div class="mt-auto space-y-4">
+                            <button onclick="addToCart(${p.id}); closeModal()" class="w-full bg-zinc-900 hover:bg-zinc-800 text-white py-4 rounded-xl font-medium transition shadow-xl shadow-zinc-200">
+                                Add to Cart - $${p.price}
+                            </button>
+                            <p class="text-center text-xs text-zinc-400">Free shipping on all orders over $2000</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2500);
+        }
+
+        function filterCategory(cat) {
+            document.getElementById('products-heading').innerText = cat === 'All' ? 'Featured Items' : cat;
+            renderProducts(cat);
+            document.getElementById('productGrid').scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+
+        function scrollToProducts() {
+            document.getElementById('products-heading').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Search Listener
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(term) || p.category.toLowerCase().includes(term));
+            
+            grid.innerHTML = '';
+            if(filtered.length === 0) {
+                 grid.innerHTML = '<div class="col-span-full text-center py-10 text-zinc-400 font-light">No products found.</div>';
+                 return;
+            }
+            
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "group cursor-pointer flex flex-col";
+                card.innerHTML = `
+                    <div class="relative aspect-[4/5] bg-zinc-100 rounded-xl overflow-hidden mb-4" onclick="openModal(${p.id})">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                        <button onclick="event.stopPropagation(); addToCart(${p.id})" class="absolute bottom-4 right-4 bg-white text-zinc-900 w-10 h-10 rounded-full flex items-center justify-center shadow-lg translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-zinc-900 hover:text-white">
+                            <span class="iconify" data-icon="lucide:plus"></span>
+                        </button>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-base font-medium text-zinc-900 group-hover:text-zinc-600 transition-colors" onclick="openModal(${p.id})">${p.name}</h3>
+                            <p class="text-xs text-zinc-500 mt-1">${p.category}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="block text-sm font-medium text-zinc-900">$${p.price}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        });
+
+        // Init
+        renderProducts();
+        updateCartUI();
+    </script>
+
+</body></html>
